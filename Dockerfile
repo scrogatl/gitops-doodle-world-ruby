@@ -8,4 +8,4 @@ RUN bundle install
 
 EXPOSE 5003
 
-# CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0", "-p", "5003"]
+CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0", "-p", "5003"]
