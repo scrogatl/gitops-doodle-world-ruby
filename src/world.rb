@@ -1,6 +1,10 @@
 # myapp.rb
-require 'sinatra'
+require 'sinatra/base'
 
-get '/' do
-  'World from Ruby!'
+class App < Sinatra::Base
+  set :show_execptions, :after_handler
+
+  get '/' do
+    'World from Ruby!'
+  end
 end

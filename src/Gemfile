@@ -2,5 +2,14 @@
 
 source 'https://rubygems.org'
 
-gem 'sinatra'
+ruby '3.2.2'
+
+# Rackup not in Sinatra 4 so forcing earlier version
+gem 'sinatra', '~> 3.0.6' 
+gem 'thin'
 gem 'rackup'
+# gem 'webrick'
+
+gem 'opentelemetry-sdk', '~> 1.2.1'
+gem 'opentelemetry-exporter-otlp', '~> 0.25.0'
+gem 'opentelemetry-instrumentation-all', '~> 0.39.1'
