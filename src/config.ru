@@ -7,7 +7,6 @@ require 'bundler'
 Bundler.require 
 
 require './world'
-require './opentelemetry'
 # require 'opentelemetry/sdk'
 # require 'opentelemetry/exporter/otlp'
 # require 'opentelemetry/instrumentation/all'
