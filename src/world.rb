@@ -1,6 +1,8 @@
-# myapp.rb
-require 'sinatra'
+# world.rb
+require 'sinatra/base'
 
-get '/' do
-  'World from Ruby!'
+class App < Sinatra::Base
+  get '/' do
+    'World from Ruby!'
+  end
 end
