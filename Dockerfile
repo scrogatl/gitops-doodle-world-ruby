@@ -1,6 +1,8 @@
 # Dockerfile
+# Only the plain (no agent) flavor is built for now; the target name matches
+# the other services so the shared workflow can build it with --target plain.
 
-FROM ruby:3.0.2
+FROM ruby:3.0.2 AS plain
 
 WORKDIR /world-ruby
 COPY src /world-ruby
