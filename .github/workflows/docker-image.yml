@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flavor: [plain]
+        flavor: [plain, newrelic, otel]
     steps:
       - name: Docker meta
         id: meta
@@ -48,6 +48,29 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image for smoke test
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./Dockerfile
+          target: ${{ matrix.flavor }}
+          platforms: linux/amd64
+          load: true
+          tags: smoke:${{ matrix.flavor }}
+          cache-from: type=gha,scope=${{ matrix.flavor }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.flavor }}
+
+      - name: Smoke test
+        run: |
+          docker run -d --name smoke -p 5003:5003 smoke:${{ matrix.flavor }}
+          out=""
+          for i in $(seq 1 30); do
+            out=$(curl -fsS http://localhost:5003/ 2>/dev/null) && break
+            sleep 2
+          done
+          echo "response: $out"
+          if [ "$out" != "World from Ruby!" ]; then docker logs smoke; exit 1; fi
 
       - name: Build and push
         uses: docker/build-push-action@v7
